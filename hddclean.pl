@@ -2,7 +2,7 @@
 use common::sense;
 use File::Remove qw(trash remove);
 
-my $config_file = $ARGV[0] || show_help("No config file");
+my $config_file = $ARGV[0] || 'config.txt';
 my $expires = $ARGV[1] || 30;# 30 day as default
 my $no_trash = $ARGV[2] || 0; # move to trash as default
 my $folders = read_folders($config_file);# read folders from config file
@@ -33,7 +33,7 @@ foreach my $f(@files) {
 sub read_folders {
     my $file = shift;
     my (@folders);
-    open(FILE,"<",$file) or die $!;
+    open(FILE,"<",$file) or show_help("No config file");
     while (my $line = <FILE>) {
         chomp($line);
         $line =~ s/\n//g;
